@@ -1,43 +1,47 @@
-# Base image for dependencies
-FROM ruby:3.0.5-slim-buster
+# Base image using Ubuntu
+FROM ubuntu:20.04
 
-# Set working directory
+# Definir o diretório de trabalho
 WORKDIR /app
 
-# Install dependencies
+# Desabilitar prompts interativos durante a instalação de pacotes
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Instalar dependências do sistema
 RUN apt-get update && apt-get install -y \
-  build-essential \
   curl \
   git \
+  build-essential \
   libpq-dev \
   postgresql-client \
   nodejs \
   yarn \
+  imagemagick \
   libxml2-dev \
   libxslt-dev \
-  imagemagick \
   file \
+  ruby-full \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
-# Install specific version of Bundler
+# Instalar uma versão específica do Bundler
 RUN gem install bundler:2.3.26
 
-# Clone Chatwoot repository
+# Clonar o repositório do Chatwoot
 RUN git clone https://github.com/chatwoot/chatwoot.git ./
 
-# Checkout specific version (v3.13.0)
+# Fazer checkout da versão específica do Chatwoot (v3.13.0)
 RUN git checkout v3.13.0
 
-# Install Ruby dependencies
+# Instalar dependências do Ruby (gems)
 RUN bundle config set without 'development test' \
   && bundle install --retry 5 --jobs 4
 
-# Install Node.js dependencies and build assets
+# Instalar dependências do Node.js e compilar os assets
 RUN yarn install && yarn build
 
-# Expose port 3000
+# Expor a porta usada pela aplicação
 EXPOSE 3000
 
-# Start the application using foreman
+# Comando de inicialização
 CMD ["bundle", "exec", "foreman", "start"]
