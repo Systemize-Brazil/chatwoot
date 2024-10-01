@@ -1,5 +1,5 @@
 # Base image
-FROM chatwoot/chatwoot:latest-ce
+FROM chatwoot/chatwoot:v3.13.0
 
 # Exemplo de customizações adicionais se necessário
 # RUN apt-get update && apt-get install -y <algum-pacote>
