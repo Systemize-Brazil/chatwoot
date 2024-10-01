@@ -5,7 +5,7 @@ FROM ubuntu:20.04
 LABEL maintainer="contato@systemize.com.br"
 
 # Evite prompts de instalação interativos
-ENV DEBIAN_FRONTEND=noninteractive
+# ENV DEBIAN_FRONTEND=noninteractive
 
 # Instale dependências essenciais
 RUN apt-get update && \
@@ -29,7 +29,6 @@ RUN chmod +x /opt/install.sh
 # Execute o script de instalação
 RUN /opt/install.sh --install <<EOF
 no
-yes
 yes
 EOF
 
