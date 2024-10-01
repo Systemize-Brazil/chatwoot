@@ -27,7 +27,10 @@ RUN wget https://get.chatwoot.app/linux/install.sh -O /opt/install.sh
 RUN chmod +x /opt/install.sh
 
 # Execute o script de instalação
-RUN /opt/install.sh --install
+RUN /opt/install.sh --install <<EOF
+no
+yes
+EOF
 
 # Exponha a porta usada pelo Chatwoot
 EXPOSE 3000
