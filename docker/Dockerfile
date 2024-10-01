@@ -30,6 +30,7 @@ RUN chmod +x /opt/install.sh
 RUN /opt/install.sh --install <<EOF
 no
 yes
+yes
 EOF
 
 # Exponha a porta usada pelo Chatwoot
