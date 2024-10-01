@@ -25,7 +25,7 @@ jobs:
       uses: docker/metadata-action@v4
       with:
         images: |
-          zgustavo/${{ vars.GITHUB_REPOSITORY }}
+          zgustavo/chatwoot
         tags: |
           type=schedule
           type=ref,event=branch
