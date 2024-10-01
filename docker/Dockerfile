@@ -13,6 +13,10 @@ RUN apt-get update && apt-get install -y \
   postgresql-client \
   nodejs \
   yarn \
+  libxml2-dev \
+  libxslt-dev \
+  imagemagick \
+  file \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/*
 
@@ -26,7 +30,8 @@ RUN git clone https://github.com/chatwoot/chatwoot.git ./
 RUN git checkout v3.13.0
 
 # Install Ruby dependencies
-RUN bundle config set without 'development test' && bundle install
+RUN bundle config set without 'development test' \
+  && bundle install --retry 5 --jobs 4
 
 # Install Node.js dependencies and build assets
 RUN yarn install && yarn build
